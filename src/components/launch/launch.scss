@@ -1,0 +1,23 @@
+@import "../../index";
+
+.Launch {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border: 1px solid $dark-blue;
+  padding: 2rem 1rem;
+  background-color: rgba(25, 118, 210, 0.2);
+  border-radius: 2rem;
+}
+
+.IconAndText {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.LaunchImage {
+  width: 15rem;
+  height: 10rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

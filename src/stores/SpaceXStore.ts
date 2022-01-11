@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { toast } from "react-toastify";
 import { RootStore } from ".";
 import { getAllLaunches } from "../apis/SpaceXAPI";
-import Launch from "../models/Launch";
+import Launch from "../models/LaunchModel";
 
 export default class SpaceXStore {
   rootStore: RootStore;

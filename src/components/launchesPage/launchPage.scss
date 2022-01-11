@@ -1,0 +1,12 @@
+.LaunchPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 10rem;
+}
+
+.LaunchesGrid {
+  overflow-y: inherit;
+  margin-bottom: 5rem;
+}

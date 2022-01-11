@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ApiResponse, errorResponse } from ".";
-import Launch from "../models/Launch";
+import Launch from "../models/LaunchModel";
 
 const baseUrl =
   process.env.REACT_APP_SPACEX_BASEURL ?? "https://api.spacexdata.com/v3";

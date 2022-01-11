@@ -1,6 +1,6 @@
-import Rocket from "./Rocket";
+import Rocket from "./RocketModel";
 
-export default interface Launch {
+export default interface LaunchModel {
   flight_number: number; // launch number
   mission_name: string;
   launch_year: number; // mission year
