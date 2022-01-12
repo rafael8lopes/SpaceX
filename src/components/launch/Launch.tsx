@@ -1,5 +1,4 @@
 import Typography from "@mui/material/Typography";
-// import Image from "mui-image";
 import DoneIcon from "@mui/icons-material/Done";
 import DangerousIcon from "@mui/icons-material/Dangerous";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
@@ -9,13 +8,6 @@ import "./launch.scss";
 
 export default function Launch(props: { launch: LaunchModel }) {
   const { launch } = props;
-
-  console.log(
-    "Image",
-    launch.links.flickr_images.length > 0
-      ? launch.links.flickr_images[0]
-      : "None"
-  );
 
   return (
     <div className="Launch">
