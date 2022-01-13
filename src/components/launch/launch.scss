@@ -1,13 +1,8 @@
-@import "../../index";
-
-.Launch {
+.LaunchName {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  border: 1px solid $dark-blue;
-  padding: 2rem 1rem;
-  background-color: rgba(25, 118, 210, 0.2);
-  border-radius: 2rem;
+  justify-content: space-between;
+  align-items: center;
+  height: 1.5rem;
 }
 
 .IconAndText {
@@ -15,9 +10,6 @@
   gap: 0.5rem;
 }
 
-.LaunchImage {
-  width: 15rem;
-  height: 10rem;
-  background-repeat: no-repeat;
-  background-size: cover;
+.Z-Index-1 {
+  z-index: 1;
 }

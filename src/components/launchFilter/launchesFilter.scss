@@ -1,8 +1,11 @@
+@import "../../index";
+
 .Filter {
   position: sticky;
   top: 2rem;
   width: 100%;
-  background: white;
+  background: $body-grey;
+  z-index: 2;
 }
 
 .FilterActions {

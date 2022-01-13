@@ -1,3 +1,5 @@
+@import "../../../index";
+
 .Footer {
   position: fixed;
   left: 0;
@@ -6,7 +8,7 @@
   display: flex;
   align-items: center;
   place-content: space-between;
-  background: white;
+  background: $body-grey;
 }
 
 .AuthorCredits {

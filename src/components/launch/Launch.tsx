@@ -2,6 +2,15 @@ import { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { useStores } from "../../stores";
 import { getRocketName } from "../../apis/SpaceXAPI";
+import {
+  Avatar,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  IconButton,
+} from "@mui/material";
 import { ToggleButton, ToggleButtonGroup, Tooltip } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import DoneIcon from "@mui/icons-material/Done";
@@ -9,6 +18,7 @@ import DangerousIcon from "@mui/icons-material/Dangerous";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import LaunchModel from "../../models/LaunchModel";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { red } from "@mui/material/colors";
 
 import "./launch.scss";
 
@@ -26,62 +36,63 @@ export default function Launch(props: { launch: LaunchModel }) {
     getRocketName(launch.rocket).then((name) => setRocketName(name));
   }, [props]);
 
-  function handleFavClick(favValue: boolean) {
-    if (favValue) {
+  function handleFavClick() {
+    if (!isFavorite) {
       spacexStore.addFavoriteLaunch(launch.id);
     } else {
       spacexStore.removeFavoriteLaunch(launch.id);
     }
 
-    setIsFavorite(favValue);
+    setIsFavorite(!isFavorite);
   }
 
   return (
-    <div className="Launch">
-      <div className="LaunchName">
-        <Typography variant="h6" color="inherit" component="div">
-          {launch.name}
-        </Typography>
-
-        <ToggleButtonGroup
-          value={isFavorite}
-          exclusive
-          onChange={(e, favValue) => handleFavClick(favValue)}
-        >
-          <ToggleButton value={true} aria-label="add to favorites">
-            <Tooltip title="Add to favorites">
+    <Card sx={{ maxWidth: 345 }}>
+      <CardHeader
+        avatar={
+          <Avatar
+            className="Z-Index-1"
+            aria-label="launch patch"
+            src={launch.links.patch.small}
+          />
+        }
+        title={
+          <div className="LaunchName">
+            <span>{launch.name}</span>
+            <IconButton
+              className="Z-Index-1"
+              aria-label="add to favorites"
+              size="small"
+              onClick={() => handleFavClick()}
+              color={isFavorite ? "error" : "default"}
+            >
               <FavoriteIcon />
-            </Tooltip>
-          </ToggleButton>
-        </ToggleButtonGroup>
-      </div>
+            </IconButton>
+          </div>
+        }
+        subheader={new Date(launch.date_utc).getFullYear()}
+      />
 
       {launch.links.flickr.original.length > 0 && (
-        <img
-          className="LaunchImage"
-          src={launch.links.flickr.original[0]}
-          alt={launch.name}
+        <CardMedia
+          alt="launch image"
+          component="img"
+          height="194"
+          image={launch.links.flickr.original[0]}
         />
       )}
 
-      <Typography variant="h6" color="inherit" component="div">
-        {launch.launch_year}
-      </Typography>
+      <CardContent>
+        <div className="IconAndText">
+          <RocketLaunchIcon />
+          <Typography variant="h6" color="inherit" component="div">
+            {rocketName}
+          </Typography>
+        </div>
 
-      <div className="IconAndText">
-        <RocketLaunchIcon />
-
-        <Typography variant="h6" color="inherit" component="div">
-          {rocketName}
-        </Typography>
-      </div>
-
-      <Typography variant="h6" color="inherit" component="div">
-        {launch.date_utc.toString()}
-      </Typography>
-
-      <LaunchSuccess hasLaunchSuccessful={launch.success} />
-    </div>
+        <LaunchSuccess hasLaunchSuccessful={launch.success} />
+      </CardContent>
+    </Card>
   );
 }
 
