@@ -5,7 +5,7 @@ import "./header.scss";
 
 export function Header() {
   return (
-    <AppBar position="static" className="Header">
+    <AppBar position="fixed" className="Header">
       <Typography variant="h6" color="inherit" component="div">
         SpaceX Launches
       </Typography>

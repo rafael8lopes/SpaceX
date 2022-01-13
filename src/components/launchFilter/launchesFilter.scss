@@ -1,6 +1,13 @@
+.Filter {
+  position: sticky;
+  top: 2rem;
+  width: 100%;
+  background: white;
+}
+
 .FilterActions {
   display: flex;
   gap: 1rem;
-
+  justify-content: center;
   margin-bottom: 2rem;
 }

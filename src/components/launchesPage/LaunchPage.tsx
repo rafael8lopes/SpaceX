@@ -16,6 +16,7 @@ export const LaunchPage = observer(() => {
   const [launchesList, setLaunchesList] = useState<LaunchModel[]>([]);
 
   useEffect(() => {
+    spacexStore.loadFavLaunchesId();
     spacexStore.loadLaunches();
   }, []);
 
@@ -23,7 +24,6 @@ export const LaunchPage = observer(() => {
     setLaunchesList(spacexStore.launches);
   }, [spacexStore.launches]);
 
-  // TODO - filter logic
   function handleFilter(filterOptions: LaunchFilterOptions) {
     const {
       afterDate,
@@ -56,9 +56,11 @@ export const LaunchPage = observer(() => {
         (l) => l.success == successfulLaunches
       );
     }
-    // if (favoriteLaunches != null) {
-    //   filteredLaunches = filteredLaunches.filter((l) => l.flight_number == 1);
-    // }
+    if (favoriteLaunches != null) {
+      filteredLaunches = filteredLaunches.filter((l) =>
+        spacexStore.checkIsFavoriteLaunch(l.id)
+      );
+    }
 
     setLaunchesList(filteredLaunches);
   }
@@ -71,7 +73,7 @@ export const LaunchPage = observer(() => {
         <Grid container rowSpacing={60} columnSpacing={10}>
           {launchesList.map((launch: LaunchModel, index: number) => (
             <Grid item xs={3} key={index}>
-              <Launch key={launch.flight_number} launch={launch} />
+              <Launch key={launch.id} launch={launch} />
             </Grid>
           ))}
         </Grid>

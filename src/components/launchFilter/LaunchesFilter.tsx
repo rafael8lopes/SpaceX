@@ -54,7 +54,7 @@ export default function LaunchFilter(props: {
   ]);
 
   return (
-    <div>
+    <div className="Filter">
       <Typography
         variant="h2"
         color="inherit"

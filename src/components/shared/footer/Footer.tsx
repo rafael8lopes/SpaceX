@@ -11,7 +11,7 @@ export function Footer() {
 
       <Link
         className="LinkedinLink"
-        href="https://google.com"
+        href="https://www.linkedin.com/in/rafael-lopes-79851a150/"
         rel="noreferrer"
         target="_blank"
       >

@@ -5,6 +5,9 @@ import { getAllLaunches } from "../apis/SpaceXAPI";
 import LaunchModel from "../models/LaunchModel";
 
 export default class SpaceXStore {
+  private favLaunchesKey: string = "favoriteLaunches";
+  private favLaunchesId: string[] = [];
+
   rootStore: RootStore;
 
   launches: LaunchModel[] = [];
@@ -22,6 +25,16 @@ export default class SpaceXStore {
     this.launches = launches;
   }
 
+  getFavLaunchesId() {
+    return this.favLaunchesId;
+  }
+
+  setFavLaunchesId(favLaunchesId: string[]) {
+    this.favLaunchesId = favLaunchesId;
+
+    localStorage.setItem(this.favLaunchesKey, JSON.stringify(favLaunchesId));
+  }
+
   loadLaunches() {
     getAllLaunches().then((resp) => {
       if (resp.success) {
@@ -30,5 +43,44 @@ export default class SpaceXStore {
         toast.error("Couldn't get the launches.");
       }
     });
+  }
+
+  loadFavLaunchesId() {
+    const favLaunchesValue = localStorage.getItem(this.favLaunchesKey);
+
+    if (favLaunchesValue) {
+      const favLaunchesList = JSON.parse(favLaunchesValue);
+
+      if (Array.isArray(favLaunchesList)) {
+        this.setFavLaunchesId(favLaunchesList);
+        return;
+      }
+    }
+
+    this.setFavLaunchesId([]);
+  }
+
+  checkIsFavoriteLaunch(launchId: string) {
+    const favoriteLaunches = this.getFavLaunchesId();
+
+    return favoriteLaunches.includes(launchId);
+  }
+
+  addFavoriteLaunch(launchId: string) {
+    const favoriteLaunches = this.getFavLaunchesId();
+
+    if (!favoriteLaunches.includes(launchId)) {
+      favoriteLaunches.push(launchId);
+    }
+
+    this.setFavLaunchesId(favoriteLaunches);
+  }
+
+  removeFavoriteLaunch(launchId: string) {
+    let favoriteLaunches = this.getFavLaunchesId();
+
+    favoriteLaunches = favoriteLaunches.filter((item) => item !== launchId);
+
+    this.setFavLaunchesId(favoriteLaunches);
   }
 }
