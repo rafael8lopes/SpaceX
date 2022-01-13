@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { ToggleButton, ToggleButtonGroup, Tooltip } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  Stack,
+  ToggleButton,
+  ToggleButtonGroup,
+  Tooltip,
+} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
 import DateAdapter from "@mui/lab/AdapterDateFns";
@@ -9,6 +16,7 @@ import HistoryIcon from "@mui/icons-material/History";
 import DoneIcon from "@mui/icons-material/Done";
 import DangerousIcon from "@mui/icons-material/Dangerous";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import BackspaceIcon from "@mui/icons-material/Backspace";
 import LaunchFilterOptions from "../../models/LaunchFilterOptions";
 
 import "./launchesFilter.scss";
@@ -17,12 +25,17 @@ export default function LaunchFilter(props: {
   filterOptions: (filter: LaunchFilterOptions) => void;
 }) {
   const { filterOptions } = props;
-  const [pastLaunchesFilter, setPastLaunchesFilter] = useState(null);
-  const [successfulLaunchesFilter, setSuccessfulLaunchesFilter] =
-    useState(null);
-  const [favoriteLaunchesFilter, setFavoriteLaunchesFilter] = useState(null);
-  const [afterDateFilter, setAfterDateFilter] = useState(null);
-  const [dateFilter, setDateFilter] = useState(null);
+  const [pastLaunchesFilter, setPastLaunchesFilter] = useState<boolean | null>(
+    null
+  );
+  const [successfulLaunchesFilter, setSuccessfulLaunchesFilter] = useState<
+    boolean | null
+  >(null);
+  const [favoriteLaunchesFilter, setFavoriteLaunchesFilter] = useState<
+    boolean | null
+  >(null);
+  const [afterDateFilter, setAfterDateFilter] = useState<boolean>(true);
+  const [dateFilter, setDateFilter] = useState<Date | null>(null);
 
   useEffect(() => {
     filterOptions({
@@ -53,7 +66,14 @@ export default function LaunchFilter(props: {
       </Typography>
 
       <div className="FilterActions">
-        <div>
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Button
+            variant="text"
+            onClick={() => setAfterDateFilter(!afterDateFilter)}
+          >
+            {afterDateFilter ? "After" : "Before"}
+          </Button>
+
           <LocalizationProvider dateAdapter={DateAdapter}>
             <DatePicker
               label="Date"
@@ -64,7 +84,13 @@ export default function LaunchFilter(props: {
               renderInput={(params: any) => <TextField {...params} />}
             />
           </LocalizationProvider>
-        </div>
+
+          {dateFilter && (
+            <IconButton aria-label="clear" onClick={() => setDateFilter(null)}>
+              <BackspaceIcon />
+            </IconButton>
+          )}
+        </Stack>
 
         <ToggleButtonGroup
           value={pastLaunchesFilter}

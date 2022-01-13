@@ -5,21 +5,30 @@ import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import LaunchModel from "../../models/LaunchModel";
 
 import "./launch.scss";
+import { getRocketName } from "../../apis/SpaceXAPI";
+import { useEffect, useState } from "react";
 
 export default function Launch(props: { launch: LaunchModel }) {
   const { launch } = props;
+  const [rocketName, setRocketName] = useState("");
+
+  useEffect(() => {
+    getRocketName(launch.rocket).then((name) => setRocketName(name));
+  }, [props]);
+
+  console.log(launch.success);
 
   return (
     <div className="Launch">
       <Typography variant="h6" color="inherit" component="div">
-        {launch.mission_name}
+        {launch.name}
       </Typography>
 
-      {launch.links.flickr_images.length > 0 && (
+      {launch.links.flickr.original.length > 0 && (
         <img
           className="LaunchImage"
-          src={launch.links.flickr_images[0]}
-          alt={launch.mission_name}
+          src={launch.links.flickr.original[0]}
+          alt={launch.name}
         />
       )}
 
@@ -31,17 +40,25 @@ export default function Launch(props: { launch: LaunchModel }) {
         <RocketLaunchIcon />
 
         <Typography variant="h6" color="inherit" component="div">
-          {launch.rocket.rocket_name}
+          {rocketName}
         </Typography>
       </div>
 
-      <LaunchSuccess hasLaunchSuccessful={launch.launch_success} />
+      <Typography variant="h6" color="inherit" component="div">
+        {launch.date_utc.toString()}
+      </Typography>
+
+      <LaunchSuccess hasLaunchSuccessful={launch.success} />
     </div>
   );
 }
 
-function LaunchSuccess(props: { hasLaunchSuccessful: boolean }) {
+function LaunchSuccess(props: { hasLaunchSuccessful: boolean | null }) {
   const { hasLaunchSuccessful } = props;
+
+  if (hasLaunchSuccessful == null) {
+    return <span>Unknown launch state</span>;
+  }
 
   return (
     <div className="IconAndText">
