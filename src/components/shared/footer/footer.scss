@@ -7,15 +7,16 @@
   width: 100vw;
   display: flex;
   align-items: center;
-  place-content: space-between;
+  justify-content: end;
   background: $body-grey;
+  z-index: 2;
 }
 
 .AuthorCredits {
-  padding-left: 1rem;
   font-style: italic;
 }
 
 .LinkedinLink {
   padding-right: 2rem;
+  padding-left: 0.5rem;
 }

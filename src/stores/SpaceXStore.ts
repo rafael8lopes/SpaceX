@@ -6,11 +6,10 @@ import LaunchModel from "../models/LaunchModel";
 
 export default class SpaceXStore {
   private favLaunchesKey: string = "favoriteLaunches";
-  private favLaunchesId: string[] = [];
-
   rootStore: RootStore;
 
   launches: LaunchModel[] = [];
+  favLaunchesId: string[] = [];
 
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;

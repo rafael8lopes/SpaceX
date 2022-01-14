@@ -1,24 +1,20 @@
 import { useEffect, useState } from "react";
-import { observer } from "mobx-react";
 import { useStores } from "../../stores";
 import { getRocketName } from "../../apis/SpaceXAPI";
 import {
   Avatar,
   Card,
-  CardActions,
   CardContent,
   CardHeader,
   CardMedia,
   IconButton,
 } from "@mui/material";
-import { ToggleButton, ToggleButtonGroup, Tooltip } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import DoneIcon from "@mui/icons-material/Done";
 import DangerousIcon from "@mui/icons-material/Dangerous";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import LaunchModel from "../../models/LaunchModel";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { red } from "@mui/material/colors";
 
 import "./launch.scss";
 
@@ -34,6 +30,10 @@ export default function Launch(props: { launch: LaunchModel }) {
 
   useEffect(() => {
     getRocketName(launch.rocket).then((name) => setRocketName(name));
+
+    return () => {
+      setRocketName("");
+    };
   }, [props]);
 
   function handleFavClick() {

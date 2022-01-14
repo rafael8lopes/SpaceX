@@ -12,8 +12,9 @@ import "./launchPage.scss";
 
 export const LaunchPage = observer(() => {
   const { spacexStore } = useStores();
-
   const [launchesList, setLaunchesList] = useState<LaunchModel[]>([]);
+
+  const gridItemWidth = resolveGridItemWidth();
 
   useEffect(() => {
     spacexStore.loadFavLaunchesId();
@@ -23,6 +24,19 @@ export const LaunchPage = observer(() => {
   useEffect(() => {
     setLaunchesList(spacexStore.launches);
   }, [spacexStore.launches]);
+
+  function resolveGridItemWidth() {
+    switch (launchesList.length) {
+      case 3:
+        return 4;
+      case 2:
+        return 6;
+      case 1:
+        return 12;
+      default:
+        return 3;
+    }
+  }
 
   function handleFilter(filterOptions: LaunchFilterOptions) {
     const {
@@ -57,8 +71,10 @@ export const LaunchPage = observer(() => {
       );
     }
     if (favoriteLaunches != null) {
-      filteredLaunches = filteredLaunches.filter((l) =>
-        spacexStore.checkIsFavoriteLaunch(l.id)
+      const favLaunches = spacexStore.getFavLaunchesId();
+
+      filteredLaunches = filteredLaunches.filter(({ id }) =>
+        favLaunches.includes(id)
       );
     }
 
@@ -70,9 +86,9 @@ export const LaunchPage = observer(() => {
       <LaunchFilter filterOptions={handleFilter} />
 
       <div className="LaunchesGrid">
-        <Grid container rowSpacing={60} columnSpacing={10}>
+        <Grid container rowSpacing={20} columnSpacing={10}>
           {launchesList.map((launch: LaunchModel, index: number) => (
-            <Grid item xs={3} key={index}>
+            <Grid item xs={gridItemWidth} key={index}>
               <Launch key={launch.id} launch={launch} />
             </Grid>
           ))}

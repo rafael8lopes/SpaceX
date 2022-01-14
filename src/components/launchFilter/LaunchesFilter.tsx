@@ -25,16 +25,21 @@ export default function LaunchFilter(props: {
   filterOptions: (filter: LaunchFilterOptions) => void;
 }) {
   const { filterOptions } = props;
+
   const [pastLaunchesFilter, setPastLaunchesFilter] = useState<boolean | null>(
     null
   );
+
   const [successfulLaunchesFilter, setSuccessfulLaunchesFilter] = useState<
     boolean | null
   >(null);
+
   const [favoriteLaunchesFilter, setFavoriteLaunchesFilter] = useState<
     boolean | null
   >(null);
+
   const [afterDateFilter, setAfterDateFilter] = useState<boolean>(true);
+
   const [dateFilter, setDateFilter] = useState<Date | null>(null);
 
   useEffect(() => {
@@ -56,10 +61,11 @@ export default function LaunchFilter(props: {
   return (
     <div className="Filter">
       <Typography
-        variant="h2"
-        color="inherit"
+        variant="h3"
+        color="#1976d2"
         component="div"
-        marginBottom={1}
+        marginBottom={2}
+        marginTop={2}
         textAlign={"center"}
       >
         Launches
